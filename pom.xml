@@ -203,7 +203,7 @@
                     </descriptors>
                     <archive>
                         <manifest>
-                            <mainClass>${mainClass}</mainClass>
+                            <mainClass>com.zhengkw.scala.flinkdemo.day01.SocketWordCount</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
