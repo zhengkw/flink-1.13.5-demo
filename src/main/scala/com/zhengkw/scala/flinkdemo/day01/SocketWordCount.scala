@@ -19,6 +19,7 @@ object SocketWordCount {
   def main(args: Array[String]): Unit = {
     //val env = StreamExecutionEnvironment.getExecutionEnvironment
     val env = StreamExecutionEnvironment.createLocalEnvironmentWithWebUI(new Configuration())
+    env.setParallelism(6)
     val text = env.socketTextStream("loyx04", 9999)
     val counts = text.flatMap {
       _.toLowerCase.split(" ") filter {
