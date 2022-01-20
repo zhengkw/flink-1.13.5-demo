@@ -18,15 +18,15 @@ object SocketUseFunctionWC {
     val env = StreamExecutionEnvironment.createLocalEnvironmentWithWebUI(new Configuration())
     env.setParallelism(6)
     val text = env.socketTextStream("loyx04", 9999)
-    val value1 = text.flatMap(new FlatMapFunction[String, String] {
-      override def flatMap(value: String, out: Collector[String]): Unit = {
+    val value1:DataStream[(String,Int)] = text.flatMap(new FlatMapFunction[String,(String,Int)] {
+      override def flatMap(value: String, out: Collector[(String,Int)]): Unit = {
         val strings = value.split(" ")
         for (s <- strings) {
           //发送到下级
-          out.collect(s)
+          out.collect((s,1))
         }
       }
-    }).map((_, 1)).keyBy(_._1).sum(1)
+    }).keyBy(_._1).sum(1)
     value1.print()
 
     env.execute("Function Proessed Stream WordCount")
